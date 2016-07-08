@@ -31,7 +31,7 @@ body, html {
   top: @top-offset-desktop;
   left: @left-offset-desktop;
   .drop-shadow(@application-box-shadow-base-width, @application-box-shadow-base-width, @application-box-shadow-base-width - 1, @application-box-shadow-depth);
-  width: @turtle-select-width*2 + @turtle-preview-padding*4 + @turtle-border-width*4;
+  width: 100%;
   .mobile({
     .drop-shadow(0, 0px, 0px, 0);
     position: inherit;
@@ -46,14 +46,14 @@ body, html {
   -webkit-filter: grayscale(100%); /* Chrome 19+, Safari 6+, Safari 6+ iOS */
 }
 .turtle {
-  font-family: helvetica;
+  font-family: Helvetica, Arial, sans-serif;
   display: inline-block;
   background-color: black;
   border: @turtle-border-width solid @turtle-border-color;
   .turtle-img-container {
     overflow: hidden;
     height: @turtle-select-height;
-    width: @turtle-select-width;
+    width: 25%;
     padding: @turtle-preview-padding;
     background-color: black;
   }
@@ -66,7 +66,7 @@ body, html {
     &:extend(.grayscale);
     margin-top: -@turtle-top-clip;
     margin-left: -@turtle-left-clip;
-    height: @turtle-preview-height;
+    width: 22%;
   }
   .turtle-name, .turtle-img, .turtle-weapon, .turtle-name, .turtle-description {
     display: inline-block;
