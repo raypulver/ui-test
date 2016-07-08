@@ -62,8 +62,9 @@
     function link(root, i) {
       this.el = root.children().eq(i);
     }
-    function render(root) {
-      root.append(this.compile());
+    function render(root, i) {
+      if (root) root.append(this.compile());
+      this.link(root, i);
     }
     function compile(root) {
       throw Error('compile must be overridden');
@@ -91,41 +92,15 @@
     this.imageSource = imageSource;
   }
 
-  var Application = (function ($) {
-    function fetchAndParseTurtleXML() {
-      var deferred = Deferred();
-      $.get({
-        url: '/base/TMNT.xml',
-        dataType: 'xml',
-        success: function (result) {
-          var $doc = $(result);
-          console.log($doc);
-          window.$doc = $doc;
-          var turtles = $doc.find('turtle');
-          var parseResult = [];
-          turtles.each(function () {
-            parseResult.push(TurtleModel(
-              $(this).find('name').text(),
-              $(this).find('color').text(),
-              $(this).find('weapon').text(),
-              $(this).find('description').text(),
-              $(this).find('imageSource').text()
-            ));
-          });
-          deferred.resolve(parseResult);
-        }
-      });
-      return deferred;
-    }
-    function Turtle(model) {
-      if (!(this instanceof Turtle)) return new Turtle(model);
+  var TurtlePreviewComponent = (function () {
+    function TurtlePreviewComponent(model) {
+      if (!(this instanceof TurtlePreviewComponent)) return new TurtlePreviewComponent(model);
       Component.call(this, model);
     }
-    Turtle.prototype = util.create(Component.prototype, {
+    TurtlePreviewComponent.prototype = util.create(Component.prototype, {
       render: function (root, i) {
         this._render(root, i);
         this.link(root, i);
-        this.el.css('background-color', this.model.color);
         this.img.css('content', 'url(' + this.model.imageSource + ')');
         this.name.css('display', 'none');
         this.name.append(this.model.name);
@@ -147,18 +122,45 @@
         return this;
       }
     });
+    return TurtlePreviewComponent;
+  })();
+
+  var Application = (function ($) {
+    function fetchAndParseTurtleXML() {
+      var deferred = Deferred();
+      $.get({
+        url: '/base/TMNT.xml',
+        dataType: 'xml',
+        success: function (result) {
+          var $doc = $(result);
+          var turtles = $doc.find('turtle');
+          var parseResult = [];
+          turtles.each(function () {
+            parseResult.push(TurtleModel(
+              $(this).find('name').text(),
+              $(this).find('color').text(),
+              $(this).find('weapon').text(),
+              $(this).find('description').text(),
+              $(this).find('imageSource').text()
+            ));
+          });
+          deferred.resolve(parseResult);
+        }
+      });
+      return deferred;
+    }
 
     function Application(config) {
       if (!(this instanceof Application)) return new Application(config);
       this.config = config;
     }
     
-    Application.prototype = {
+    Application.prototype = util.create(Component.prototype, {
       start: function () {
         var self = this;
         fetchAndParseTurtleXML().then(function (models) {
           self.turtles = models.map(function (v) {
-            return Turtle(v);
+            return TurtlePreviewComponent(v);
           });
           self.render();
         });
@@ -170,13 +172,13 @@
       },
       render: function () {
         var self = this;
-        self.link();
+        self._render();
         self.turtles.forEach(function (v, i) {
           v.render(self.el, i);
         });
         return this;
       }
-    };
+    });
     return Application;
   })($);
 
