@@ -132,8 +132,7 @@
         url: '/base/TMNT.xml',
         dataType: 'xml',
         success: function (result) {
-          var $doc = $(result);
-          var turtles = $doc.find('turtle');
+          var turtles = $(result).find('turtle');
           var parseResult = [];
           turtles.each(function () {
             parseResult.push(TurtleModel(
