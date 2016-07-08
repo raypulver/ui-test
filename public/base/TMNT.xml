@@ -1,0 +1,30 @@
+<turtles>
+	<turtle>
+		<name><![CDATA[Leonardo]]></name>
+		<color><![CDATA[Blue]]></color>
+		<weapon><![CDATA[Katanas]]></weapon>
+		<description><![CDATA[A serious swordsman with strong eithics, Leonard is the leader of the group.]]></description>
+		<imageSource><![CDATA[img/leonardo.jpg]]></imageSource>
+	</turtle>
+	<turtle>
+		<name><![CDATA[Donatello]]></name>
+		<color><![CDATA[Purple]]></color>
+		<weapon><![CDATA[Bo]]></weapon>
+		<description><![CDATA[Donatello is the brains of the outfit. He has a passion for science and gadgets, but doesn't always understand humans.]]></description>
+		<imageSource><![CDATA[img/donatello.jpg]]></imageSource>
+	</turtle>
+	<turtle>
+		<name><![CDATA[Raphael]]></name>
+		<color><![CDATA[Red]]></color>
+		<weapon><![CDATA[Sai]]></weapon>
+		<description><![CDATA[Witty and sarcastic Raphael is never at a loss for words.]]></description>
+		<imageSource><![CDATA[img/raphael.jpg]]></imageSource>
+	</turtle>
+	<turtle>
+		<name><![CDATA[Michelangelo]]></name>
+		<color><![CDATA[Orange]]></color>
+		<weapon><![CDATA[Nunchaku]]></weapon>
+		<description><![CDATA[A real partty dude, Michaelangelo is known for catchphrases like "cowabunga" and "totally tubular"]]></description>
+		<imageSource><![CDATA[img/michelangelo.jpg]]></imageSource>
+	</turtle>
+</turtles>

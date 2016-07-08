@@ -1,0 +1,39 @@
+@import (reference) "elements.less";
+@import (reference) "variables.less";
+
+.center() {
+  margin-left: auto;
+  margin-right: auto;
+}
+.desktop(@rules) {
+  @media only screen and (min-device-width: @mobile-breakpoint + 1) {
+    @rules();
+  }
+}
+.mobile(@rules) {
+  @media only screen and (max-device-width: @mobile-breakpoint) {
+    @rules();
+  }
+}
+.hfill(@percent: 100%) {
+  width: @percent;
+}
+
+.vfill(@percent: 100%) {
+  height: @percent;
+}
+
+.fill(@percent: 100%) {
+  .hfill(@percent);
+  .vfill(@percent);
+}
+
+.valign() {
+  vertical-align: middle;
+}
+
+.vcenter(@top: 0) {
+  position: relative;
+  top: calc(~'50% - @{top}');
+  .transform(translateY(-50%));
+}

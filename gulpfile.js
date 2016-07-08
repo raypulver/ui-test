@@ -22,6 +22,9 @@ function buildTestTask() {
   let args = [].slice.call(arguments, 1).join(' ');
   return `node node_modules/${framework}/bin/${framework} ${args}`;
 }
+function buildStartTask() {
+  return `node server`;
+}
 
 gulp.task('default', ['build', 'jshint']);
 
@@ -35,6 +38,7 @@ gulp.task('build:tasks', function () {
   forOwn(gulp.tasks, function (value, key, obj) {
     if (~reserved.indexOf(key)) return;
     packageJson.scripts[key] = `node ${join('node_modules', 'gulp', 'bin', 'gulp')} ${key}`;
+    packageJson.scripts.start = buildStartTask();
   });
   writeFileSync('./package.json', JSON.stringify(packageJson, null, 1));
 });
@@ -48,13 +52,13 @@ gulp.task('test', function (done) {
 });
 
 gulp.task('build:styles', function () {
-  return gulp.src('assets/**/*.less')
+  return gulp.src('public/assets/style*.less')
     .pipe(less())
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest('public/dist'));
 });
 
 gulp.task('jshint', function () {
-  return gulp.src('./application.js')
+  return gulp.src('./public/application.js')
     .pipe(jshint.bound())
     .pipe(jshint.reporter('jshint-stylish'));
 });

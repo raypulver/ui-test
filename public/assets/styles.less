@@ -1,0 +1,53 @@
+@import (reference) "elements.less";
+@import (reference) "mixins.less";
+
+@application-base-color: average(green, black);
+@offset: (100% - @application-height-desktop)/2 - 12%;
+@application-height-desktop: 50%;
+@application-width-desktop: 50%;
+@turtle-select-height: 175px;
+@turtle-top-clip: 15px;
+@turtle-preview-padding: 10px;
+@turtle-preview-height: 350px;
+@gradient-list: darken(@application-base-color, 6%), @application-base-color 80%, @application-base-color;
+
+body, html {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background-color: @application-base-color;
+  background-image: svg-gradient(to right, @gradient-list);
+}
+
+#application {
+  position: relative;
+  top: @offset;
+  left: @offset;
+  .drop-shadow(0, 3px, 5px, 0.32);
+  width: @application-width-desktop;
+  height: @application-height-desktop;
+  .mobile({
+    .drop-shadow(0, 0px, 0px, 0);
+    position: inherit;
+    width: 100%;
+    height: 100%;
+  });
+  background-color: lighten(@application-base-color, 8%);
+}
+
+.turtle {
+  font-family: helvetica;
+  .turtle-img-container {
+    overflow: hidden;
+    height: @turtle-select-height;
+    padding: @turtle-preview-padding;
+    background-color: black;
+  }
+  .turtle-img {
+    margin-top: -@turtle-top-clip;
+    height: @turtle-preview-height;
+  }
+  .turtle-name, .turtle-img, .turtle-weapon, .turtle-name, .turtle-description {
+    display: inline-block;
+  }
+}
