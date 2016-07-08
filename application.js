@@ -31,7 +31,7 @@
     }
     function mapOwn(obj, cb, thisArg) {
       var retval = {};
-      forOwn(obj, function () {
+      forOwn(obj, function (value, key) {
         retval[key] = cb.apply(thisArg, arguments);
       });
       return retval;
