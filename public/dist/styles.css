@@ -7,105 +7,86 @@ html {
   background-image: url('data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%20%3F%3E%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20version%3D%221.1%22%20width%3D%22100%25%22%20height%3D%22100%25%22%20viewBox%3D%220%200%201%201%22%20preserveAspectRatio%3D%22none%22%3E%3ClinearGradient%20id%3D%22gradient%22%20gradientUnits%3D%22userSpaceOnUse%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%220%25%22%3E%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23002100%22%2F%3E%3Cstop%20offset%3D%2280%25%22%20stop-color%3D%22%23004000%22%2F%3E%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23004000%22%2F%3E%3C%2FlinearGradient%3E%3Crect%20x%3D%220%22%20y%3D%220%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22url(%23gradient)%22%20%2F%3E%3C%2Fsvg%3E');
 }
 #application {
-<<<<<<< Updated upstream
   position: relative;
-  top: 10%;
-  left: 25%;
+  top: -180%;
+  width: 200%;
+  height: 350px;
+  left: 0%;
+  border: none;
+  background-image: none;
+  background-color: none;
+  text-align: center;
+}
+#application #turtle-select {
+  margin-left: auto;
+  margin-right: auto;
   -webkit-box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.32);
   -moz-box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.32);
   box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.32);
-  width: 100%;
-=======
->>>>>>> Stashed changes
+  width: 600px;
+  width: 1120px;
   background-color: #006900;
 }
-@media only screen and (min-device-width: 480px + 1) {
-  #application {
-    position: relative;
-    top: 10%;
-    left: 25%;
-    -webkit-box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.32);
-    -moz-box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.32);
-    box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.32);
-    width: 600px;
-  }
-}
 @media only screen and (max-device-width: 480px) {
-  #application {
+  #application #turtle-select {
     -webkit-box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
     -moz-box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
     box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
     width: 100%;
     height: 100%;
-    top: 0px;
-    left: 0px;
   }
 }
-.grayscale,
-.turtle .turtle-img {
-  filter: url("data:image/svg+xml;utf8,&lt;svg xmlns=\'http://www.w3.org/2000/svg\'&gt;&lt;filter id=\'grayscale\'&gt;&lt;feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/&gt;&lt;/filter&gt;&lt;/svg&gt;#grayscale");
-  /* Firefox 10+, Firefox on Android */
-  filter: gray;
-  /* IE6-9 */
-  -webkit-filter: grayscale(100%);
-  /* Chrome 19+, Safari 6+, Safari 6+ iOS */
-}
-.turtle {
-  font-family: Helvetica, Arial, sans-serif;
-  display: inline-block;
+#application #turtle-select .turtle {
   background-color: black;
+  width: 100%;
   border: 5px solid black;
 }
-@media only screen and (max-device-width: 480px) {
-  .turtle {
-    height: 50%;
-    width: 50%;
-  }
-}
-.turtle .turtle-img-container {
-  overflow: hidden;
-<<<<<<< Updated upstream
+#application #turtle-select .turtle .turtle-img-container {
+  display: inline-block;
   height: 175px;
-  width: 25%;
-=======
->>>>>>> Stashed changes
+  width: 100%;
+  overflow: hidden;
   padding: 10px;
   background-color: black;
 }
-@media only screen and (min-device-width: 480px + 1) {
-  .turtle .turtle-img-container {
-    height: 175px;
-    width: 270px;
-  }
-}
 @media only screen and (max-device-width: 480px) {
-  .turtle .turtle-img-container {
+  #application #turtle-select .turtle .turtle-img-container {
     height: 100%;
     width: 100%;
   }
 }
-.turtle .turtle-img {
+#application #turtle-select .turtle .turtle-img {
   -moz-transition-duration: 0.3s;
   -webkit-transition-duration: 0.3s;
   -o-transition-duration: 0.3s;
   transition-duration: 0.3s;
   margin-top: -15px;
   margin-left: 0px;
-  width: 22%;
+  height: 350px;
 }
-.turtle .turtle-img:hover {
+#application #turtle-select .turtle .turtle-img:hover {
   filter: url("data:image/svg+xml;utf8,&lt;svg xmlns=\'http://www.w3.org/2000/svg\'&gt;&lt;filter id=\'grayscale\'&gt;&lt;feColorMatrix type=\'matrix\' values=\'1 0 0 0 0, 0 1 0 0 0, 0 0 1 0 0, 0 0 0 1 0\'/&gt;&lt;/filter&gt;&lt;/svg&gt;#grayscale");
   -webkit-filter: grayscale(0%);
 }
 @media only screen and (max-device-width: 480px) {
-  .turtle .turtle-img {
+  #application #turtle-select .turtle .turtle-img {
     height: 50%;
   }
 }
-.turtle .turtle-name,
-.turtle .turtle-img,
-.turtle .turtle-weapon,
-.turtle .turtle-name,
-.turtle .turtle-description {
+#application #turtle-details .turtle-name,
+#application #turtle-details .turtle-img,
+#application #turtle-details .turtle-weapon,
+#application #turtle-details .turtle-name,
+#application #turtle-details .turtle-description {
+  font-family: Helvetica, Arial, sans-serif;
   display: inline-block;
+}
+.grayscale,
+#application #turtle-select .turtle .turtle-img {
+  filter: url("data:image/svg+xml;utf8,&lt;svg xmlns=\'http://www.w3.org/2000/svg\'&gt;&lt;filter id=\'grayscale\'&gt;&lt;feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/&gt;&lt;/filter&gt;&lt;/svg&gt;#grayscale");
+  /* Firefox 10+, Firefox on Android */
+  filter: gray;
+  /* IE6-9 */
+  -webkit-filter: grayscale(100%);
+  /* Chrome 19+, Safari 6+, Safari 6+ iOS */
 }
