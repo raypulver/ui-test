@@ -144,10 +144,10 @@
   })();
 
   var NetworkService = (function ($) {
-    var Deferred = $.Deferred;
+    var Deferred = $.Deferred, get = $.get;
     function fetchAndParseTurtleXML() {
       var deferred = Deferred();
-      $.get({
+      get({
         url: '/base/TMNT.xml',
         dataType: 'xml',
         success: function (result) {
@@ -335,21 +335,6 @@
           v.render(self.el, i);
         });
         return this;
-      },
-      slideOut: function () {
-        return AnimateService($('#application'), {
-          left: '-175%'
-        }, 500);
-      },
-      slideIn: function () {
-        return AnimateService($('#application'), {
-          left: 0
-        });
-      },
-      slideDown: function () {
-        return AnimateService($('#application'), {
-          top: '10%'
-        });
       }
     });
 
@@ -365,24 +350,29 @@
     TurtleDetailsComponent.prototype = Util.create(Component.prototype, {
       render: function (root, i) {
         this.el = $('#turtle-details');
+        this.container = $('#turtle-details-container');
         this._render(true);
         var turtle = Util.find.call(Store.getState().turtles, function (v) {
           return v.name === Store.getState().selected;
         });
         if (turtle) {
-          this.el.css('background-color', turtle.color);
+          this.container.css('border-color', turtle.color);
           this.img.css('content', 'url(' + turtle.imageSource + ')');
           this.name.append(turtle.name);
-          this.weapon.append(turtle.weapon);
-          this.description.append(turtle.description);
+          this.weapon.append('Weapon: ' + turtle.weapon);
+          this.description.append('<i>' + turtle.description + '</i>');
         }
         return this;
       },
       compile: function () {
         return '<div class="turtle-img-full"></div>' +
-                 '<div class="turtle-name"></div>' +
-                 '<div class="turtle-weapon"></div>' + 
-                 '<div class="turtle-description"></div>';
+                 '<div class="turtle-information">' +
+                   '<div class="turtle-name"></div>' +
+                   '<div class="turtle-weapon"></div>' + 
+                   '<div class="turtle-description"></div>' +
+                   '<table class="back-button"><tr><td>Back</td></tr></table>' +
+                 '</div>' +
+               '</div>';
       },
       link: function (root, i) {
         this.el = $('#turtle-details');
@@ -390,17 +380,11 @@
         this.name = this.el.find('.turtle-name');
         this.weapon = this.el.find('.turtle-weapon');
         this.description = this.el.find('.turtle-description');
+        this.back = this.el.find('.back-button');
+        this.back.click(function () {
+          window.history.back();
+        });
         return this;
-      },
-      slideIn: function () {
-        return AnimateService(this, {
-          left: 0
-        }, 500);
-      },
-      slideOut: function () {
-        return AnimateService(this, {
-          left: '175%'
-        }, 500);
       }
     });
     return TurtleDetailsComponent;
@@ -416,13 +400,30 @@
     Application.prototype = Util.create(Component.prototype, {
       run: function () {
         var self = this;
-        $('document').ready(function () {
+        $(document).ready(function () {
           self.start();
         });
         return this;
       },
+      link: function () {
+        this.el = $('#application');
+      },
+      compile: function () {
+          return '<tr>' + 
+                   '<td class="viewport">' +
+                     '<div id="turtle-select"></div>' +
+                   '</td>' +
+                   '<td class="viewport">' +
+                     '<div id="turtle-details-container">' +
+                       '<div id="turtle-details"></div>' +
+                     '</div>' +
+                   '</td>' +
+                 '</tr>'; 
+      },
       start: function () {
         var self = this;
+        this.link();
+        this.render(true);
         this.turtleSelectComponent = TurtleSelectComponent();
         this.turtleDetailsComponent = TurtleDetailsComponent();
         Store.setReducer(Store.combineReducers({
@@ -446,15 +447,14 @@
           }
         }));
         $(window).on('hashchange', function () {
-          Store.dispatch({
-            type: 'SELECT_TURTLE',
-            select: Util.capitalizeFirst(window.location.hash.substr(1)) || 'none'
-          });
+          self.handleHashChange();
         });
         Store.subscribe(function (state, oldState) {
           if (!oldState && state.turtles) {
             self.turtleSelectComponent.render();
-            self.slideDown();
+            self.slideDown().then(function () {
+              self.handleHashChange();
+            });
           }
           if (oldState && (state.selected !== oldState.selected)) {
             if (oldState.selected === 'none') {
@@ -482,23 +482,30 @@
         });
         return this;
       },
+      handleHashChange: function () {
+        Store.dispatch({
+          type: 'SELECT_TURTLE',
+          select: Util.capitalizeFirst(window.location.hash.substr(1)) || 'none'
+        });
+        return this;
+      },
       slideDown: function () {
-        return AnimateService($('#application'), {
+        return AnimateService(this, {
           top: '10%'
         }, 400);
       },
       slideUp: function () {
-        return AnimateService($('#application'), {
+        return AnimateService(this, {
           top: '-200%'
         }, 400);
       },
       slideLeft: function () {
-        return AnimateService($('#application'), {
+        return AnimateService(this, {
           left: '0%'
         }, 400);
       },
       slideRight: function () {
-        return AnimateService($('#application'), {
+        return AnimateService(this, {
           left: '-100%'
         }, 400);
       }
