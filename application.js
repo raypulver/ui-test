@@ -6,19 +6,30 @@
     var hasOwnProperty =  Object.prototype.hasOwnProperty,
         toString = Object.prototype.toString,
         getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor,
-        forEach = Array.prototype.forEach;
+        forEach = Array.prototype.forEach || function (cb, thisArg) {
+          for (var i = 0; i < this.length; ++i) {
+            cb.call(thisArg, this[i], i, this);
+          }
+        },
+        map = Array.prototype.map || function (cb, thisArg) {
+          var retval = [];
+          forEach.call(this, function (v, i, arr) {
+            retval.push(cb.call(thisArg, v, i, arr));
+          });
+          return retval;
+        };
     function keysShim(o) {
       var retval = [];
       for (var i in o) {
         if (hasOwnProperty.call(o, i)) {
-          retval.push(o[i]);
+          retval.push(i);
         }
       }
       return retval;
     }
     var keys = Object.keys || keysShim;
     function assignShim(dest, src) {
-      keys(src).forEach(function (v) {
+      forEach.call(keys(src), function (v) {
         dest[v] = src[v];
       });
       return dest;
@@ -135,6 +146,7 @@
       mapOwn: mapOwn,
       forOwn: forOwn,
       forEach: forEachEarlyExit,
+      map: map,
       equal: simpleEqual,
       find: find,
       findIndex: findIndex,
@@ -148,7 +160,7 @@
     function fetchAndParseTurtleXML() {
       var deferred = Deferred();
       get({
-        url: '/base/TMNT.xml',
+        url: '/TMNT.xml',
         dataType: 'xml',
         success: function (result) {
           var turtles = $(result).find('turtle');
@@ -200,7 +212,7 @@
     function dispatch(evt) {
       var oldState = state;
       state = reducer(evt, state);
-      observers.forEach(function (v) {
+      Util.forEach.call(observers, function (v) {
         v(state, oldState);
       });
     }
@@ -328,10 +340,10 @@
       render: function () {
         var self = this;
         self._render();
-        self.previews = Store.getState().turtles.map(function (v) {
+        self.previews = Util.map.call(Store.getState().turtles, function (v) {
           return TurtlePreviewComponent(v);
         });
-        self.previews.forEach(function (v, i) {
+        Util.forEach.call(self.previews, function (v, i) {
           v.render(self.el, i);
         });
         return this;
