@@ -19,11 +19,11 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'public/index.html',
-      { pattern: 'TMNT.xml', included: false },
+      'index.html',
       'node_modules/jquery/dist/jquery.js',
-      'public/application.js',
-      'test/**/*.js'
+      'test/fixtures.js',
+      'application.js',
+      'test/test.js'
     ],
 
 

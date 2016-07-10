@@ -13,6 +13,10 @@ let jshintConfig = {};
 
 require.extensions['.json'](jshintConfig, './.jshintrc');
 
+var lessPath = './assets/**/sty*.less';
+var srcPath = './application.js';
+var distPath = './dist';
+
 jshintConfig = jshintConfig.exports;
 
 jshint.bound = jshint.bind(null, jshintConfig);
@@ -34,7 +38,6 @@ const reserved = [];
 
 gulp.task('build:tasks', function () {
   packageJson.scripts = {};
-//  packageJson.scripts.test = buildTestTask('karma', 'start', 'karma.conf.js');
   forOwn(gulp.tasks, function (value, key, obj) {
     if (~reserved.indexOf(key)) return;
     packageJson.scripts[key] = `node ${join('node_modules', 'gulp', 'bin', 'gulp')} ${key}`;
@@ -52,13 +55,13 @@ gulp.task('test', function (done) {
 });
 
 gulp.task('build:styles', function () {
-  return gulp.src('public/assets/style*.less')
+  return gulp.src(lessPath)
     .pipe(less())
-    .pipe(gulp.dest('public/dist'));
+    .pipe(gulp.dest(distPath));
 });
 
 gulp.task('jshint', function () {
-  return gulp.src('./public/application.js')
+  return gulp.src(srcPath)
     .pipe(jshint.bound())
     .pipe(jshint.reporter('jshint-stylish'));
 });
