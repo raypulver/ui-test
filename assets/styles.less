@@ -1,0 +1,142 @@
+@import (reference) "elements.less";
+@import (reference) "mixins.less";
+
+@application-base-color: average(green, black);
+@application-height-desktop: 50%;
+@top-offset-desktop: (100% - @application-height-desktop)/2 - 15%;
+@left-offset-desktop: (100% - @application-height-desktop)/2;
+@application-width-desktop: 50%;
+@turtle-select-height: 175px;
+@turtle-select-width: 270px;
+@turtle-top-clip: 15px;
+@turtle-border-color: black;
+@turtle-border-width: 5px;
+@turtle-left-clip: 0px;
+@turtle-preview-padding: 10px;
+@turtle-preview-height: 350px;
+@turtle-details-height: 500px;
+@application-box-shadow-base-width: 5px;
+@application-box-shadow-depth: 0.42;
+@gradient-list: darken(@application-base-color, 6%), @application-base-color 80%, @application-base-color;
+
+body, html {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background-color: @application-base-color;
+  background-image: svg-gradient(to right, @gradient-list);
+  overflow: hidden;
+}
+
+#application {
+  position: relative;
+  top: -180%;
+  width: 200%;
+  height: @turtle-preview-height;
+  left: 0%;
+  border: none;
+  background-image: none;
+  background-color: none;
+  .viewport {
+    width: 50%;
+    #turtle-select {
+      margin-left: auto;
+      margin-right: auto;
+      .drop-shadow(@application-box-shadow-base-width, @application-box-shadow-base-width, @application-box-shadow-base-width - 1, @application-box-shadow-depth);
+      width: @turtle-select-width*4 + @turtle-border-width*8;
+      background-color: black;
+      .turtle {
+        background-color: black;
+        display: inline-block;
+        width: 24%;
+        border: @turtle-border-width solid @turtle-border-color;
+        .turtle-img-container {
+          display: inline-block;
+          height: @turtle-select-height;
+          width: 100%;
+          overflow: hidden;
+          background-color: black;
+        }
+        .turtle-img {
+          .transition-duration(0.3s);
+          &:hover {
+            cursor: pointer;
+            filter: url("data:image/svg+xml;utf8,&lt;svg xmlns=\'http://www.w3.org/2000/svg\'&gt;&lt;filter id=\'grayscale\'&gt;&lt;feColorMatrix type=\'matrix\' values=\'1 0 0 0 0, 0 1 0 0 0, 0 0 1 0 0, 0 0 0 1 0\'/&gt;&lt;/filter&gt;&lt;/svg&gt;#grayscale");
+            -webkit-filter: grayscale(0%);
+          }
+          &:extend(.grayscale);
+          margin-top: -@turtle-top-clip;
+          margin-left: -@turtle-left-clip;
+          height: @turtle-preview-height;
+        }
+      }
+    }
+    #turtle-details-container {
+      width: 60%;
+      margin-left: auto;
+      margin-right: auto;
+      border-width: 5px;
+      border-style: solid;
+      border-color: black;
+      height: @turtle-details-height;
+      background-color: black;
+      .drop-shadow(5px, 5px, 5px, 0.32);
+      #turtle-details {
+        .turtle-name, .turtle-img-full, .turtle-weapon, .turtle-description {
+          color: white;
+          font-family: Helvetica, Arial, sans-serif;
+        }
+        .turtle-img-full, .turtle-weapon, .turtle-description {
+          margin-left: 10px;
+        }
+        .turtle-name {
+          font-size: 36px;
+          padding-top: 100px;
+          height: 100px;
+        }
+        .turtle-description {
+          padding: 30px;
+        }
+        .back-button {
+          border: black 3px solid;
+          background-color: black;
+          margin: 25px 25px 0 auto;
+          height: 10%;
+          width: 20%;
+          .border-radius(5px, 5px, 5px, 5px);
+          .transition-duration(0.2s);
+          &:hover {
+            cursor: pointer;
+            background-color: lighten(average(green, black), 8%);
+          }
+          &:hover:active {
+            background-color: lighten(average(green, black), 60%);
+          }
+          td {
+            vertical-align: middle;
+            text-align: center;
+            color: white;
+            font-family: Helvetica, Arial, sans-serif;
+          }
+        }
+        .turtle-img-full {
+          display: inline-block;
+        }
+        .turtle-img-full {
+          height: @turtle-details-height;
+          float: left;
+        }
+        .turtle-information {
+          margin: auto 0 auto 0;
+          height: 80%;
+        }
+      }
+    }
+  }
+}
+.grayscale {
+  filter: url("data:image/svg+xml;utf8,&lt;svg xmlns=\'http://www.w3.org/2000/svg\'&gt;&lt;filter id=\'grayscale\'&gt;&lt;feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/&gt;&lt;/filter&gt;&lt;/svg&gt;#grayscale"); /* Firefox 10+, Firefox on Android */
+  filter: gray; /* IE6-9 */
+  -webkit-filter: grayscale(100%); /* Chrome 19+, Safari 6+, Safari 6+ iOS */
+}
+

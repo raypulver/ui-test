@@ -1,0 +1,21 @@
+Vestmark UI Engineer Coding Test Instructions:
+
+Make an application that displays information about the Teenage Mutant Ninja Turtles. This application should have two views: 
+
+	1.) A main view that shows a list of all four turtles.
+	2.) A detail view that shows specific information about a turtle. This should include their name, color, weapon, description, and image.
+
+The user should be able to select a turtle from the main list to see the details of. From the details view, the user should be able to navigate back to the main list view. Exactly how this interaction works is up to you. The information for each turtle is provided in TMNT.xml, and there is an image for each turtle in the img directory. Feel free to crop/resize these images as needed.
+
+
+Requirements:
+
+1.) The user interface should be clean, attractively styled, and easy to use.
+
+2.) The application must run on IE7-10, as well as current versions of Chrome and Firefox.
+
+3.) The user must be able to filter the main view to display turtles by name, color, or weapon. Each filter option will only return one result, but that's ok. 
+
+4.) Use of jQuery is allowed.
+
+5.) Please let us know if your final application needs to be run on a server.
