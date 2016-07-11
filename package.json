@@ -1,7 +1,7 @@
 {
-  "name": "ui-test",
+  "name": "tmnt",
   "version": "1.0.0",
-  "description": "UI test submission for Vestmark",
+  "description": "UI test submission",
   "main": "index.js",
   "scripts": {
     "default": "node node_modules/gulp/bin/gulp default",

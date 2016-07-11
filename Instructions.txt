@@ -1,4 +1,4 @@
-Vestmark UI Engineer Coding Test Instructions:
+UI Engineer Coding Test Instructions:
 
 Make an application that displays information about the Teenage Mutant Ninja Turtles. This application should have two views: 
 
