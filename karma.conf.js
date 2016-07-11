@@ -21,8 +21,8 @@ module.exports = function(config) {
     files: [
       'index.html',
       'node_modules/jquery/dist/jquery.js',
-      'test/fixtures.js',
       'application.js',
+      'test/fixtures.js',
       'test/test.js'
     ],
 

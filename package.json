@@ -1,48 +1,49 @@
 {
- "name": "ui-test",
- "version": "1.0.0",
- "description": "UI test submission for Vestmark",
- "main": "index.js",
- "scripts": {
-  "default": "node node_modules/gulp/bin/gulp default",
-  "start": "node server",
-  "build": "node node_modules/gulp/bin/gulp build",
-  "build:tasks": "node node_modules/gulp/bin/gulp build:tasks",
-  "test": "node node_modules/gulp/bin/gulp test",
-  "build:styles": "node node_modules/gulp/bin/gulp build:styles",
-  "jshint": "node node_modules/gulp/bin/gulp jshint"
- },
- "repository": {
-  "type": "git",
-  "url": "git+https://github.com/raypulver/ui-test.git"
- },
- "keywords": [
-  "ui",
-  "test"
- ],
- "author": "Raymond Pulver",
- "license": "MIT",
- "bugs": {
-  "url": "https://github.com/raypulver/ui-test/issues"
- },
- "homepage": "https://github.com/raypulver/ui-test#readme",
- "dependencies": {
-  "express": "^4.14.0",
-  "jquery": "^1.12.4",
-  "jquery-legacy": "^1.12.0"
- },
- "devDependencies": {
-  "chai": "^3.5.0",
-  "gulp": "^3.9.1",
-  "gulp-jshint": "^2.0.1",
-  "gulp-less": "^3.1.0",
-  "jshint": "^2.9.2",
-  "jshint-stylish": "^2.2.0",
-  "karma": "^1.1.1",
-  "karma-chai": "^0.1.0",
-  "karma-html2js-preprocessor": "^1.0.0",
-  "karma-mocha": "^1.1.1",
-  "karma-phantomjs-launcher": "^1.0.1",
-  "mocha": "^2.5.3"
- }
+  "name": "ui-test",
+  "version": "1.0.0",
+  "description": "UI test submission for Vestmark",
+  "main": "index.js",
+  "scripts": {
+    "default": "node node_modules/gulp/bin/gulp default",
+    "start": "node server",
+    "build": "node node_modules/gulp/bin/gulp build",
+    "build:tasks": "node node_modules/gulp/bin/gulp build:tasks",
+    "test": "node node_modules/gulp/bin/gulp test",
+    "build:styles": "node node_modules/gulp/bin/gulp build:styles",
+    "jshint": "node node_modules/gulp/bin/gulp jshint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raypulver/ui-test.git"
+  },
+  "keywords": [
+    "ui",
+    "test"
+  ],
+  "author": "Raymond Pulver",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/raypulver/ui-test/issues"
+  },
+  "homepage": "https://github.com/raypulver/ui-test#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "jquery": "^1.12.4",
+    "jquery-legacy": "^1.12.0",
+    "morgan": "^1.7.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "gulp": "^3.9.1",
+    "gulp-jshint": "^2.0.1",
+    "gulp-less": "^3.1.0",
+    "jshint": "^2.9.2",
+    "jshint-stylish": "^2.2.0",
+    "karma": "^1.1.1",
+    "karma-chai": "^0.1.0",
+    "karma-html2js-preprocessor": "^1.0.0",
+    "karma-mocha": "^1.1.1",
+    "karma-phantomjs-launcher": "^1.0.1",
+    "mocha": "^2.5.3"
+  }
 }

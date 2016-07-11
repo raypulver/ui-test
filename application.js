@@ -2,22 +2,21 @@
   "use strict";
   var $ = this.$;
   var Deferred = $.Deferred;
-  var Util = (function () {
+  var Util = (function ($) {
     var hasOwnProperty =  Object.prototype.hasOwnProperty,
         toString = Object.prototype.toString,
         getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor,
-        forEach = Array.prototype.forEach || function (cb, thisArg) {
-          for (var i = 0; i < this.length; ++i) {
-            cb.call(thisArg, this[i], i, this);
-          }
-        },
-        map = Array.prototype.map || function (cb, thisArg) {
-          var retval = [];
-          forEach.call(this, function (v, i, arr) {
-            retval.push(cb.call(thisArg, v, i, arr));
-          });
-          return retval;
-        };
+        forEach = Array.prototype.forEach || forEachShim,
+        map = Array.prototype.map || mapShim,
+        Deferred = $.Deferred;
+
+    function timeout(n) {
+      var deferred = Deferred();
+      setTimeout(function () {
+        deferred.resolve();
+      }, n);
+      return deferred;
+    }
     function keysShim(o) {
       var retval = [];
       for (var i in o) {
@@ -28,6 +27,18 @@
       return retval;
     }
     var keys = Object.keys || keysShim;
+    function forEachShim(cb, thisArg) {
+      for (var i = 0; i < this.length; ++i) {
+        cb.call(thisArg, this[i], i, this);
+      }
+    }
+    function mapShim (cb, thisArg) {
+      var retval = [];
+      forEach.call(this, function (v, i, arr) {
+        retval.push(cb.call(thisArg, v, i, arr));
+      });
+      return retval;
+    }
     function assignShim(dest, src) {
       forEach.call(keys(src), function (v) {
         dest[v] = src[v];
@@ -140,20 +151,26 @@
       return str;
     }
     return create(null, {
+      timeout: timeout,
       keys: keys,
+      _keysShim: keysShim,
       create: create,
+      _createShim: createShim,
       assign: assign,
+      _assignShim: assignShim,
       mapOwn: mapOwn,
       forOwn: forOwn,
       forEach: forEachEarlyExit,
+      _forEachShim: forEachShim,
       map: map,
+      _mapShim: mapShim,
       equal: simpleEqual,
       find: find,
       findIndex: findIndex,
       capitalizeFirst: capitalizeFirst,
       NOOP: function () {}
     });
-  })();
+  })($);
 
   var NetworkService = (function ($) {
     var Deferred = $.Deferred, get = $.get;
@@ -297,15 +314,15 @@
     TurtlePreviewComponent.prototype = Util.create(Component.prototype, {
       render: function (root, i) {
         this._render(root, i);
-        this.img.css('content', 'url(' + Store.getState().turtles[i].imageSource + ')');
+        this.img.css('background-image', 'url(' + Store.getState().turtles[i].imageSource + ')');
         return this;
       },
       compile: function () {
-        return '<div class="turtle">' +
+        return '<span class="turtle">' +
                  '<div class="turtle-img-container">' +
                    '<div class="turtle-img"></div>' +
                  '</div>' +
-               '</div>';
+               '</span>';
       },
       link: function (root, i) {
         this._link(root, i);
@@ -369,7 +386,8 @@
         });
         if (turtle) {
           this.container.css('border-color', turtle.color);
-          this.img.css('content', 'url(' + turtle.imageSource + ')');
+          this.img.find('img').attr('src', turtle.imageSource);
+//          this.img.css('background-image', 'url(' + turtle.imageSource + ')');
           this.name.append(turtle.name);
           this.weapon.append('Weapon: ' + turtle.weapon);
           this.description.append('<i>' + turtle.description + '</i>');
@@ -377,14 +395,15 @@
         return this;
       },
       compile: function () {
-        return '<div class="turtle-img-full"></div>' +
-                 '<div class="turtle-information">' +
-                   '<div class="turtle-name"></div>' +
-                   '<div class="turtle-weapon"></div>' + 
-                   '<div class="turtle-description"></div>' +
-                   '<table class="back-button"><tr><td>Back</td></tr></table>' +
-                 '</div>' +
-               '</div>';
+                 return '<tr valign="middle">' + 
+                   '<td class="turtle-img-full" valign="middle"><img src="#" /></td>' +
+                   '<td class="turtle-information" valign="middle">' +
+                     '<div class="turtle-name"></div>' +
+                     '<div class="turtle-weapon"></div>' + 
+                     '<div class="turtle-description"></div>' +
+                     '<table class="back-button"><tr><td>Back</td></tr></table>' +
+                    '</td>' +
+                  '</tr>';
       },
       link: function (root, i) {
         this.el = $('#turtle-details');
@@ -394,7 +413,10 @@
         this.description = this.el.find('.turtle-description');
         this.back = this.el.find('.back-button');
         this.back.click(function () {
-          window.history.back();
+          Store.dispatch({
+            type: 'SELECT_TURTLE',
+            select: 'none'
+          });
         });
         return this;
       }
@@ -402,7 +424,9 @@
     return TurtleDetailsComponent;
   })($);
 
-  var Application = (function ($, Deferred) {
+  var Application = (function ($) {
+
+    var Deferred = $.Deferred;
 
     function Application(config) {
       if (!(this instanceof Application)) return new Application(config);
@@ -411,11 +435,14 @@
     
     Application.prototype = Util.create(Component.prototype, {
       run: function () {
-        var self = this;
+        var self = this,
+            deferred = Deferred();
         $(document).ready(function () {
-          self.start();
+          self.start().then(function () {
+            deferred.resolve(self);
+          });
         });
-        return this;
+        return deferred;
       },
       link: function () {
         this.el = $('#application');
@@ -423,12 +450,17 @@
       compile: function () {
           return '<tr>' + 
                    '<td class="viewport">' +
+                     '<div id="select-banner">Select a turtle!</div>' +
                      '<div id="turtle-select"></div>' +
                    '</td>' +
                    '<td class="viewport">' +
-                     '<div id="turtle-details-container">' +
-                       '<div id="turtle-details"></div>' +
-                     '</div>' +
+                     '<table id="turtle-details-container">' +
+                       '<tr>' +
+                         '<td>' +
+                           '<table id="turtle-details"></table>' +
+                         '</td>' +
+                       '</tr>' +
+                     '</table>' +
                    '</td>' +
                  '</tr>'; 
       },
@@ -486,13 +518,15 @@
             }
           }
         });
+        var deferred = Deferred();
         NetworkService.fetchAndParseTurtleXML().then(function (models) {
           Store.dispatch({
             type: 'LOAD_TURTLES',
             turtles: models
           });
+          deferred.resolve(self);
         });
-        return this;
+        return deferred;
       },
       handleHashChange: function () {
         Store.dispatch({
@@ -523,14 +557,19 @@
       }
     });
     return Application;
-  })($, Deferred);
+  })($);
 
   Util.assign(this, {
     Util: Util,
     Application: Application,
-    Store: Store
+    Store: Store,
+    Component: Component,
+    TurtlePreviewComponent: TurtlePreviewComponent,
+    TurtleSelectComponent: TurtleSelectComponent,
+    NetworkService: NetworkService
   });
 
 }).call(this);
 
-var application = Application().run();
+var application = Application();
+var readyPromise = application.run();

@@ -3,36 +3,78 @@ html {
   width: 100%;
   height: 100%;
   margin: 0;
+  overflow: hidden;
+}
+html {
   background-color: #004000;
   background-image: url('data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%20%3F%3E%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20version%3D%221.1%22%20width%3D%22100%25%22%20height%3D%22100%25%22%20viewBox%3D%220%200%201%201%22%20preserveAspectRatio%3D%22none%22%3E%3ClinearGradient%20id%3D%22gradient%22%20gradientUnits%3D%22userSpaceOnUse%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%220%25%22%3E%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23002100%22%2F%3E%3Cstop%20offset%3D%2280%25%22%20stop-color%3D%22%23004000%22%2F%3E%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23004000%22%2F%3E%3C%2FlinearGradient%3E%3Crect%20x%3D%220%22%20y%3D%220%22%20width%3D%221%22%20height%3D%221%22%20fill%3D%22url(%23gradient)%22%20%2F%3E%3C%2Fsvg%3E');
-  overflow: hidden;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
 }
 #application {
   position: relative;
   top: -180%;
   width: 200%;
-  height: 350px;
+  height: 80%;
   left: 0%;
   border: none;
   background-image: none;
   background-color: none;
+  vertical-align: middle;
+}
+#application tr {
+  vertical-align: middle;
+  height: 100%;
 }
 #application .viewport {
   width: 50%;
+  height: 100%;
+  text-align: center;
+  vertical-align: middle;
 }
-#application .viewport #turtle-select {
-  margin-left: auto;
-  margin-right: auto;
+#application .viewport #select-banner {
+  font-family: Helvetica, Arial, sans-serif;
+  color: white;
+  text-align: center;
   -webkit-box-shadow: 5px 5px 4px rgba(0, 0, 0, 0.42);
   -moz-box-shadow: 5px 5px 4px rgba(0, 0, 0, 0.42);
   box-shadow: 5px 5px 4px rgba(0, 0, 0, 0.42);
-  width: 1120px;
+  font-size: 30px;
+  padding: 35px 0px 25px 0px;
   background-color: black;
+  width: 90%;
+  margin: 0px auto 0px auto;
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 0px;
+  -webkit-border-bottom-left-radius: 0px;
+  -webkit-border-top-left-radius: 5px;
+  -moz-border-radius-topright: 5px;
+  -moz-border-radius-bottomright: 0px;
+  -moz-border-radius-bottomleft: 0px;
+  -moz-border-radius-topleft: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 5px;
+  -moz-background-clip: padding-box;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+}
+#application .viewport #turtle-select {
+  text-align: left;
+  margin: auto;
+  width: 90%;
+  overflow: hidden;
+  -webkit-box-shadow: 5px 5px 4px rgba(0, 0, 0, 0.42);
+  -moz-box-shadow: 5px 5px 4px rgba(0, 0, 0, 0.42);
+  box-shadow: 5px 5px 4px rgba(0, 0, 0, 0.42);
+  background-color: black;
+  text-align: center;
 }
 #application .viewport #turtle-select .turtle {
   background-color: black;
   display: inline-block;
-  width: 24%;
+  width: 23%;
   border: 5px solid black;
 }
 #application .viewport #turtle-select .turtle .turtle-img-container {
@@ -47,14 +89,15 @@ html {
   -webkit-transition-duration: 0.3s;
   -o-transition-duration: 0.3s;
   transition-duration: 0.3s;
-  margin-top: -15px;
-  margin-left: 0px;
+  margin-top: -10px;
+  margin-left: -110px;
   height: 350px;
 }
 #application .viewport #turtle-select .turtle .turtle-img:hover {
   cursor: pointer;
-  filter: url("data:image/svg+xml;utf8,&lt;svg xmlns=\'http://www.w3.org/2000/svg\'&gt;&lt;filter id=\'grayscale\'&gt;&lt;feColorMatrix type=\'matrix\' values=\'1 0 0 0 0, 0 1 0 0 0, 0 0 1 0 0, 0 0 0 1 0\'/&gt;&lt;/filter&gt;&lt;/svg&gt;#grayscale");
   -webkit-filter: grayscale(0%);
+  -moz-filter: grayscale(0%);
+  filter: none;
 }
 #application .viewport #turtle-details-container {
   width: 60%;
@@ -63,11 +106,25 @@ html {
   border-width: 5px;
   border-style: solid;
   border-color: black;
-  height: 500px;
+  height: 100%;
+  max-height: 500px;
   background-color: black;
   -webkit-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.32);
   -moz-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.32);
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.32);
+  vertical-align: middle;
+}
+#application .viewport #turtle-details-container #turtle-details {
+  vertical-align: middle;
+  table-layout: fixed;
+  border-collapse: collapse:
+        width: 100%;
+}
+#application .viewport #turtle-details-container #turtle-details tr {
+  height: 100%;
+  margin-left: auto;
+  margin-top: auto;
+  vertical-align: middle;
 }
 #application .viewport #turtle-details-container #turtle-details .turtle-name,
 #application .viewport #turtle-details-container #turtle-details .turtle-img-full,
@@ -76,25 +133,24 @@ html {
   color: white;
   font-family: Helvetica, Arial, sans-serif;
 }
-#application .viewport #turtle-details-container #turtle-details .turtle-img-full,
 #application .viewport #turtle-details-container #turtle-details .turtle-weapon,
 #application .viewport #turtle-details-container #turtle-details .turtle-description {
   margin-left: 10px;
 }
 #application .viewport #turtle-details-container #turtle-details .turtle-name {
-  font-size: 36px;
-  padding-top: 100px;
-  height: 100px;
+  font-size: 24px;
+  padding-top: 40px;
+  height: 40px;
 }
 #application .viewport #turtle-details-container #turtle-details .turtle-description {
-  padding: 30px;
+  padding: 5px 10px 5px 10px;
 }
 #application .viewport #turtle-details-container #turtle-details .back-button {
   border: black 3px solid;
   background-color: black;
-  margin: 25px 25px 0 auto;
-  height: 10%;
-  width: 20%;
+  margin: 15px 15px 0 auto;
+  height: 40px;
+  width: 80px;
   -webkit-border-top-right-radius: 5px;
   -webkit-border-bottom-right-radius: 5px;
   -webkit-border-bottom-left-radius: 5px;
@@ -122,29 +178,46 @@ html {
 #application .viewport #turtle-details-container #turtle-details .back-button:hover:active {
   background-color: #73ff73;
 }
+#application .viewport #turtle-details-container #turtle-details .back-button tbody {
+  height: 100%;
+}
+#application .viewport #turtle-details-container #turtle-details .back-button tr {
+  height: 100%;
+}
 #application .viewport #turtle-details-container #turtle-details .back-button td {
+  margin-top: auto;
+  margin-bottom: auto;
+  height: 100%;
   vertical-align: middle;
   text-align: center;
   color: white;
   font-family: Helvetica, Arial, sans-serif;
 }
 #application .viewport #turtle-details-container #turtle-details .turtle-img-full {
-  display: inline-block;
+  width: 40%;
+  max-height: 100%;
+  vertical-align: middle;
+  text-align: center;
+  overflow: hidden;
 }
-#application .viewport #turtle-details-container #turtle-details .turtle-img-full {
-  height: 500px;
-  float: left;
+#application .viewport #turtle-details-container #turtle-details .turtle-img-full img {
+  width: 100%;
+  vertical-align: middle;
+  margin: auto;
 }
 #application .viewport #turtle-details-container #turtle-details .turtle-information {
-  margin: auto 0 auto 0;
+  vertical-align: middle;
+  width: auto;
+  text-align: left;
+  padding-right: 10px;
+  font-size: 16px;
   height: 80%;
 }
 .grayscale,
 #application .viewport #turtle-select .turtle .turtle-img {
-  filter: url("data:image/svg+xml;utf8,&lt;svg xmlns=\'http://www.w3.org/2000/svg\'&gt;&lt;filter id=\'grayscale\'&gt;&lt;feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/&gt;&lt;/filter&gt;&lt;/svg&gt;#grayscale");
-  /* Firefox 10+, Firefox on Android */
   filter: gray;
   /* IE6-9 */
+  -moz-filter: grayscale(100%);
   -webkit-filter: grayscale(100%);
   /* Chrome 19+, Safari 6+, Safari 6+ iOS */
 }

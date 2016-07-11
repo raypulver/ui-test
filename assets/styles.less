@@ -6,49 +6,75 @@
 @top-offset-desktop: (100% - @application-height-desktop)/2 - 15%;
 @left-offset-desktop: (100% - @application-height-desktop)/2;
 @application-width-desktop: 50%;
+@turtle-select-component-width: 4*@turtle-select-width + 8*@turtle-border-width;
 @turtle-select-height: 175px;
 @turtle-select-width: 270px;
-@turtle-top-clip: 15px;
+@turtle-top-clip: 10px;
 @turtle-border-color: black;
 @turtle-border-width: 5px;
-@turtle-left-clip: 0px;
+@turtle-left-clip: 110px;
 @turtle-preview-padding: 10px;
 @turtle-preview-height: 350px;
 @turtle-details-height: 500px;
 @application-box-shadow-base-width: 5px;
 @application-box-shadow-depth: 0.42;
 @gradient-list: darken(@application-base-color, 6%), @application-base-color 80%, @application-base-color;
+@dark-gradient-list: darken(@application-base-color, 9%), black 80%, black;
 
 body, html {
   width: 100%;
   height: 100%;
   margin: 0;
+  overflow: hidden;
+}
+
+html {
   background-color: @application-base-color;
   background-image: svg-gradient(to right, @gradient-list);
-  overflow: hidden;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
 }
 
 #application {
   position: relative;
   top: -180%;
   width: 200%;
-  height: @turtle-preview-height;
+  height: 80%;
   left: 0%;
   border: none;
   background-image: none;
   background-color: none;
+  vertical-align: middle;
+  tr { vertical-align: middle; height: 100%; }
   .viewport {
     width: 50%;
-    #turtle-select {
-      margin-left: auto;
-      margin-right: auto;
+    height: 100%;
+    text-align: center;
+    vertical-align: middle;
+    #select-banner {
+      font-family: Helvetica, Arial, sans-serif;
+      color: white;
+      text-align: center;
       .drop-shadow(@application-box-shadow-base-width, @application-box-shadow-base-width, @application-box-shadow-base-width - 1, @application-box-shadow-depth);
-      width: @turtle-select-width*4 + @turtle-border-width*8;
+      font-size: 30px;
+      padding: 35px 0px 25px 0px;
       background-color: black;
+      width: 90%;
+      margin: 0px auto 0px auto;
+      .border-radius(5px, 0px, 0px, 5px);
+    }
+    #turtle-select {
+      text-align: left;
+      margin: auto;
+      width: 90%;
+      overflow: hidden;
+      .drop-shadow(@application-box-shadow-base-width, @application-box-shadow-base-width, @application-box-shadow-base-width - 1, @application-box-shadow-depth);
+      background-color: black;
+      text-align: center;
       .turtle {
         background-color: black;
         display: inline-block;
-        width: 24%;
+        width: 23%;
         border: @turtle-border-width solid @turtle-border-color;
         .turtle-img-container {
           display: inline-block;
@@ -61,8 +87,10 @@ body, html {
           .transition-duration(0.3s);
           &:hover {
             cursor: pointer;
-            filter: url("data:image/svg+xml;utf8,&lt;svg xmlns=\'http://www.w3.org/2000/svg\'&gt;&lt;filter id=\'grayscale\'&gt;&lt;feColorMatrix type=\'matrix\' values=\'1 0 0 0 0, 0 1 0 0 0, 0 0 1 0 0, 0 0 0 1 0\'/&gt;&lt;/filter&gt;&lt;/svg&gt;#grayscale");
+            // filter: url("data:image/svg+xml;utf8,&lt;svg xmlns=\'http://www.w3.org/2000/svg\'&gt;&lt;filter id=\'grayscale\'&gt;&lt;feColorMatrix type=\'matrix\' values=\'1 0 0 0 0, 0 1 0 0 0, 0 0 1 0 0, 0 0 0 1 0\'/&gt;&lt;/filter&gt;&lt;/svg&gt;#grayscale") !important;
             -webkit-filter: grayscale(0%);
+            -moz-filter: grayscale(0%);
+            filter: none;
           }
           &:extend(.grayscale);
           margin-top: -@turtle-top-clip;
@@ -78,31 +106,43 @@ body, html {
       border-width: 5px;
       border-style: solid;
       border-color: black;
-      height: @turtle-details-height;
+      height: 100%;
+      max-height: 500px;
       background-color: black;
       .drop-shadow(5px, 5px, 5px, 0.32);
+      vertical-align: middle;
       #turtle-details {
+        vertical-align: middle;
+        table-layout: fixed;
+        border-collapse: collapse:
+        width: 100%;
+        tr {
+          height: 100%;
+          margin-left: auto;
+          margin-top: auto;
+          vertical-align: middle;
+        }
         .turtle-name, .turtle-img-full, .turtle-weapon, .turtle-description {
           color: white;
           font-family: Helvetica, Arial, sans-serif;
         }
-        .turtle-img-full, .turtle-weapon, .turtle-description {
+        .turtle-weapon, .turtle-description {
           margin-left: 10px;
         }
         .turtle-name {
-          font-size: 36px;
-          padding-top: 100px;
-          height: 100px;
+          font-size: 24px;
+          padding-top: 40px;
+          height: 40px;
         }
         .turtle-description {
-          padding: 30px;
+          padding: 5px 10px 5px 10px;
         }
         .back-button {
           border: black 3px solid;
           background-color: black;
-          margin: 25px 25px 0 auto;
-          height: 10%;
-          width: 20%;
+          margin: 15px 15px 0 auto;
+          height: 40px;
+          width: 80px;
           .border-radius(5px, 5px, 5px, 5px);
           .transition-duration(0.2s);
           &:hover {
@@ -112,7 +152,16 @@ body, html {
           &:hover:active {
             background-color: lighten(average(green, black), 60%);
           }
+          tbody {
+            height: 100%;
+          }
+          tr {
+            height: 100%;
+          }
           td {
+            margin-top: auto;
+            margin-bottom: auto;
+            height: 100%;
             vertical-align: middle;
             text-align: center;
             color: white;
@@ -120,14 +169,23 @@ body, html {
           }
         }
         .turtle-img-full {
-          display: inline-block;
-        }
-        .turtle-img-full {
-          height: @turtle-details-height;
-          float: left;
+          width: 40%;
+          max-height: 100%;
+          vertical-align: middle;
+          text-align: center;
+          overflow: hidden;
+          img {
+            width: 100%;
+            vertical-align: middle;
+            margin: auto;
+          }
         }
         .turtle-information {
-          margin: auto 0 auto 0;
+          vertical-align: middle;
+          width: auto;
+          text-align: left;
+          padding-right: 10px;
+          font-size: 16px;
           height: 80%;
         }
       }
@@ -135,8 +193,9 @@ body, html {
   }
 }
 .grayscale {
-  filter: url("data:image/svg+xml;utf8,&lt;svg xmlns=\'http://www.w3.org/2000/svg\'&gt;&lt;filter id=\'grayscale\'&gt;&lt;feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/&gt;&lt;/filter&gt;&lt;/svg&gt;#grayscale"); /* Firefox 10+, Firefox on Android */
+  // filter: url("data:image/svg+xml;utf8,&lt;svg xmlns=\'http://www.w3.org/2000/svg\'&gt;&lt;filter id=\'grayscale\'&gt;&lt;feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/&gt;&lt;/filter&gt;&lt;/svg&gt;#grayscale"); /* Firefox 10+, Firefox on Android */
   filter: gray; /* IE6-9 */
+  -moz-filter: grayscale(100%);
   -webkit-filter: grayscale(100%); /* Chrome 19+, Safari 6+, Safari 6+ iOS */
 }
 
